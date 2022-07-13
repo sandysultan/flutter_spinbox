@@ -29,17 +29,18 @@ import '../spin_gesture.dart';
 class SpinButton extends StatelessWidget {
   const SpinButton({
     Key? key,
-    required this.icon,
-    this.color,
+    // required this.icon,
+    // this.color,
     this.enabled = true,
     required this.step,
     this.acceleration,
     required this.interval,
-    required this.onStep,
+    required this.onStep, required this.text,
   }) : super(key: key);
 
-  final Icon icon;
-  final Color? color;
+  // final Icon icon;
+  final String text;
+  // final Color? color;
   final bool enabled;
   final double step;
   final double? acceleration;
@@ -48,23 +49,32 @@ class SpinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      shape: const CircleBorder(),
-      color: Colors.transparent,
-      clipBehavior: Clip.antiAlias,
-      child: SpinGesture(
-        enabled: enabled,
-        step: step,
-        interval: interval,
-        acceleration: acceleration,
-        onStep: onStep,
-        child: IconButton(
-          icon: icon,
-          color: color,
-          disabledColor: color,
-          iconSize: icon.size ?? 24,
-          onPressed: enabled ? () => onStep(step) : null,
+    return SpinGesture(
+      enabled: enabled,
+      step: step,
+      interval: interval,
+      acceleration: acceleration,
+      onStep: onStep,
+      child: ElevatedButton(
+        // icon: icon,
+        // color: color,
+        // disabledColor: color,
+        // iconSize: icon.size ?? 24,
+        style: ElevatedButton.styleFrom(
+          primary: const Color.fromRGBO(249, 239, 227, 1),
+          onPrimary: Colors.black,
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          padding: EdgeInsets.zero,
+          maximumSize: const Size(36, 36),
+          minimumSize: const Size(36, 36),
+          textStyle: const TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
+        onPressed: enabled ? () => onStep(step) : null, child: Text(text),
       ),
     );
   }

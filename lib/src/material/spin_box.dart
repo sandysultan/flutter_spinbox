@@ -51,7 +51,7 @@ class SpinBox extends BaseSpinBox {
   SpinBox({
     Key? key,
     this.min = 0,
-    this.max = 100,
+    this.max = 999,
     this.step = 1,
     this.pageStep = 10,
     this.value = 0,
@@ -408,10 +408,11 @@ class _SpinBoxState extends State<SpinBox> with SpinBoxMixin {
 
     final incrementButton = SpinButton(
       step: widget.step,
-      color: iconColor.resolve(incrementStates),
-      icon: widget.incrementIcon,
+      // color: iconColor.resolve(incrementStates),
+      // icon: widget.incrementIcon,
       enabled: widget.enabled && value < widget.max,
       interval: widget.interval,
+      text: '+',
       acceleration: widget.acceleration,
       onStep: (step) => setValue(value + step),
     );
@@ -420,8 +421,9 @@ class _SpinBoxState extends State<SpinBox> with SpinBoxMixin {
 
     final decrementButton = SpinButton(
       step: widget.step,
-      color: iconColor.resolve(decrementStates),
-      icon: widget.decrementIcon,
+      text: '-',
+      // color: iconColor.resolve(decrementStates),
+      // icon: widget.decrementIcon,
       enabled: widget.enabled && value > widget.min,
       interval: widget.interval,
       acceleration: widget.acceleration,
@@ -436,20 +438,14 @@ class _SpinBoxState extends State<SpinBox> with SpinBoxMixin {
             bottom: bottom,
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: widget.spacing),
-                child: decrementButton,
-              ),
+              child: decrementButton,
             ),
           ),
           Positioned.fill(
             bottom: bottom,
             child: Align(
               alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: widget.spacing),
-                child: incrementButton,
-              ),
+              child: incrementButton,
             ),
           )
         ],
