@@ -38,6 +38,7 @@ abstract class BaseSpinBox extends StatefulWidget {
   int get decimals;
   int get digits;
   ValueChanged<double>? get onChanged;
+  double Function(double previous, double current)? get interceptor;
   bool Function(double value)? get canChange;
   VoidCallback? get beforeChange;
   VoidCallback? get afterChange;
@@ -118,12 +119,16 @@ mixin SpinBoxMixin<T extends BaseSpinBox> on State<T> {
   }
 
   void setValue(double v) {
-    final newValue = v.clamp(widget.min, widget.max);
+    double newValue = v.clamp(widget.min, widget.max);
     if (newValue == value) return;
 
     if (widget.canChange?.call(newValue) == false) return;
 
     widget.beforeChange?.call();
+    if(widget.interceptor!=null){
+      newValue = widget.interceptor!(value,newValue);
+    }
+
     setState(() => _updateController(value, newValue));
     widget.afterChange?.call();
   }
